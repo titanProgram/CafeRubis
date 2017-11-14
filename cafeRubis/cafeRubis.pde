@@ -21,7 +21,10 @@ void draw()
 {
   if ( frameCount % 10 == 0 )
   {
-    textAlign( "Cafe Rubis Till System", 
+    textAlign( CENTER, CENTER );
+    fill( 0 );
+    textSize( 20 );
+    text( "Cafe Rubis Till System", width / 2, 10 );
     displayProducts();
     displayBill();
   }
@@ -31,6 +34,7 @@ void loadData()
 {
   Table table = loadTable( "products.csv", "header" );
   TableRow row;
+  
   for ( int i = 0; i < table.getRowCount(); i++ )
   {
     row = table.getRow(i);
@@ -42,6 +46,7 @@ void printProducts()
 {
   Table table = loadTable( "products.csv", "header" );
   TableRow row;
+
   for( int i = 0; i < table.getRowCount(); i++ )
   {
     row = table.getRow(i);
@@ -55,7 +60,7 @@ void displayProducts()
   float boxHeight;
   float boxWidth;
   float margin = height / 20;
-  
+  textSize( textSize );
   textAlign( CENTER,CENTER );
   
   // Counting how many elements are in the ArrayList products
