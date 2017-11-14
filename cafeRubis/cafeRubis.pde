@@ -7,6 +7,7 @@ ArrayList<Product> products = new ArrayList<Product>();
 ArrayList<Product> bill = new ArrayList<Product>();
 
 
+int textSize = 14;
 
 void setup()
 {
@@ -18,8 +19,12 @@ void setup()
 
 void draw()
 {
-displayProducts();  
-  
+  if ( frameCount % 10 == 0 )
+  {
+    textAlign( "Cafe Rubis Till System", 
+    displayProducts();
+    displayBill();
+  }
 }
 
 void loadData()
@@ -60,15 +65,8 @@ void displayProducts()
   }
   
   boxHeight = ( height - ( margin * count + ( margin ) ) ) / count;
-  //println(boxHeight);
   boxWidth = width / 3;
-  //println(boxWidth);
-  /*for ( float i = margin; i < height; i += boxHeight + margin )
-  {
-    fill(255);
-    rect( margin, i, boxWidth, boxHeight );
-    
-  }*/
+
   float i = margin;
   for ( Product product : products )
   {
@@ -76,7 +74,46 @@ void displayProducts()
     rect( margin, i, boxWidth, boxHeight );
     fill(0);
     text( product.name, margin + ( boxWidth / 2 ), i + ( boxHeight / 2 ) );
+    
+    // checking if user clicked on a product
+    if ( mousePressed && mouseX < margin + boxWidth && mouseX > margin && mouseY < i + boxHeight && mouseY > i )
+    {
+      bill.add( product );
+      println( product.name );
+    }
+    
     i += boxHeight + margin;
+    
   }
+}
+
+void displayBill()
+{
+  textSize( textSize );
+  float margin = height / 20;
+  float boxWidth = width / 2;
+  float boxHeight = height - ( margin * 2 );
+  float textSpacing = margin * 2;
+  float total = 0;
+  fill( 255 );
+  rect( width - ( boxWidth + margin ), margin, boxWidth, boxHeight );
   
+  textAlign( CENTER, CENTER );
+  fill( 0 );
+  text( "Your Bill", width - ( ( boxWidth / 2 ) + margin ), margin + textSize );
+  
+  for ( Product product : bill )
+  {
+    textAlign( LEFT );
+    text( product.name, width - ( boxWidth + margin - textSize ), textSpacing + margin );
+    textAlign( RIGHT );
+    text( product.price, width - ( margin + textSize ), textSpacing + margin );
+    
+    textSpacing += textSize;
+    total += product.price;
+  }
+  textAlign( LEFT );
+  text( "Total", width - ( boxWidth + margin - textSize ), textSpacing + margin );
+  textAlign( RIGHT );
+  text( total, width - ( margin + textSize ), textSpacing + margin );
 }
